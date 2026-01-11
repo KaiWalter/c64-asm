@@ -2,25 +2,22 @@
 .segment "INIT"
 .segment "ONCE"
 .segment "CODE"
-.import _cbm_k_bsout
 
-LDY #$00
-JSR sub
+main:
+    lda #$00        ; Black
+    sta $d020
+    sta $d021
+
+    ldy #0
 loop:
-LDA helloworld,Y
-BEQ end
-JSR _cbm_k_bsout
-INY
-JMP loop
+    lda helloworld,y
+    beq end
+    sta $0400,y     ; Screen RAM
+    iny
+    jmp loop
+
 end:
-RTS
-
-sub:
-JSR subsub
-RTS
-
-subsub:
-RTS
+    rts
 
 .segment "DATA"
 
